@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mygrafana-dep
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      type: grafana
+  template:
+    metadata:
+      name: mygrafana_pod
+      labels:
+        type: grafana
+    spec:
+      containers:
+      - name: "my-gra-con1"
+        image: "grafana/grafana:latest"
+        volumeMounts:
+         - name: grafana-vol1
+           mountPath:  /var/lib/grafana
+      volumes:
+       - name: grafana-vol1 
+         persistentVolumeClaim: 
+           claimName: mypvc1grafa
+       
+
+        
+
+
