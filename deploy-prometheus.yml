@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myprometheus-dep
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      type: prometheus
+  template:
+    metadata:
+      name: myprometheus_pod
+      labels:
+        type: prometheus
+    spec:
+      containers:
+      - name: "my-pro-con1"
+        image: "vimal13/prometheus"
+        volumeMounts:
+         - name: prom-vol1
+           mountPath:  /etc/prometheus/
+         - name: prom-vol2
+           mountPath: /prometheus/
+      volumes:
+       - name: prom-vol2 
+         persistentVolumeClaim: 
+           claimName: mypvc1prom
+       - name: prom-vol1 
+         configMap:
+           name: prom-config
+
+
+        
+
+
